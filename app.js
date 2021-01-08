@@ -38,9 +38,12 @@ app.get("/posts/:postName", (req, res) => {
   posts.forEach(post => {
     if(_.kebabCase(post.title) === _.kebabCase(req.params.postName)) {
       console.log("Match found!");
+      res.render("post", {
+        postTitle: post.title,
+        postBody: post.body
+      });
     }
   });
-  // console.log("Not found");
 });
 
 app.post("/compose", (req, res) => {
