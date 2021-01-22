@@ -62,16 +62,30 @@ app.get("/compose", (req, res) => {
   res.render("compose");
 });
 
-app.get("/posts/:postName", (req, res) => {
-  posts.forEach(post => {
-    if(_.kebabCase(post.title) === _.kebabCase(req.params.postName)) {
-      // console.log("Match found!");
+app.get("/posts/:postid", (req, res) => {
+  const pid = req.params.postid;
+  Post.findById(pid, (err, docs) => {
+    if (!err) {
       res.render("post", {
-        postTitle: post.title,
-        postBody: post.content
+        postTitle: docs.title,
+        postBody: docs.content
       });
+    } else {
+      console.log(err);
     }
   });
+
+
+
+  // posts.forEach(post => {
+  //   if(_.kebabCase(post.title) === _.kebabCase(req.params.postName)) {
+  //     // console.log("Match found!");
+  //     res.render("post", {
+  //       postTitle: post.title,
+  //       postBody: post.content
+  //     });
+  //   }
+  // });
 });
 
 app.post("/compose", (req, res) => {
