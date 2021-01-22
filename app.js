@@ -38,9 +38,15 @@ const postSchema = new mongoose.Schema({
 const Post = mongoose.model("Post", postSchema);
 
 app.get("/", (req, res) => {
-  res.render("home", {
-    homeContent: homeStartingContent,
-    posts: posts
+  Post.find({}, (err, docs) => {
+    if (!err) {
+      res.render("home", {
+        homeContent: homeStartingContent,
+        posts: docs
+      });
+    } else {
+      console.log(err);
+    } 
   });
 });
 
@@ -62,7 +68,7 @@ app.get("/posts/:postName", (req, res) => {
       // console.log("Match found!");
       res.render("post", {
         postTitle: post.title,
-        postBody: post.body
+        postBody: post.content
       });
     }
   });
