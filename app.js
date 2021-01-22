@@ -31,7 +31,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  post: String
+  content: String
 });
 
 // Create post schema model
@@ -69,11 +69,13 @@ app.get("/posts/:postName", (req, res) => {
 });
 
 app.post("/compose", (req, res) => {
-  const post = {
+  const post = new Post({
     title: req.body.postTitle,
-    body: req.body.postBody
-  };
-  posts.push(post);
+    content: req.body.postBody
+  });
+  post.save();
+
+  // posts.push(post);
   res.redirect("/");
 });
 
