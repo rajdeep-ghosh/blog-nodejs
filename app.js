@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 // Connect MongoDB at default port 27017.
-mongoose.connect('mongodb://localhost:27017/blogDB', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, (err) => {
+mongoose.connect('mongodb+srv://' + process.env.AUTH + '@cluster0.avqm9.mongodb.net/blogDB?retryWrites=true&w=majority', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, (err) => {
   if (!err) {
     console.log('MongoDB Connection Succeeded.')
   } else {
