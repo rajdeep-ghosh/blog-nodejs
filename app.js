@@ -15,6 +15,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const port = process.env.PORT || 3000;
+
 // Connect MongoDB at default port 27017.
 mongoose.connect('mongodb+srv://' + process.env.AUTH + '@cluster0.avqm9.mongodb.net/blogDB?retryWrites=true&w=majority', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, (err) => {
   if (!err) {
@@ -87,6 +89,6 @@ app.post("/compose", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("Server started on port 3000");
 });
